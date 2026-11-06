@@ -1,8 +1,9 @@
 import { type Actions, fail } from '@sveltejs/kit';
+import { env } from 'cloudflare:workers';
 import { sendFiche, FIELDS } from '../lib/server/mail';
 
 export const actions: Actions = {
-	default: async ({ request, platform }) => {
+	default: async ({ request }) => {
 		const data = await request.formData();
 
 		const values: Record<string, string> = {};
@@ -20,24 +21,14 @@ export const actions: Actions = {
 			});
 		}
 
-		if (!platform?.env) {
-			console.error('Cloudflare environment is unavailable.');
-
-			return fail(500, {
-				error: "Le service d'envoi est indisponible.",
-				values
-			});
-		}
-
 		try {
 			await sendFiche(values, {
-				BREVO_API_KEY: platform.env.BREVO_API_KEY,
-				MAIL_FROM: platform.env.MAIL_FROM,
-				MAIL_TO: platform.env.MAIL_TO
+				BREVO_API_KEY: env.BREVO_API_KEY,
+				MAIL_FROM: env.MAIL_FROM,
+				MAIL_TO: env.MAIL_TO
 			});
 		} catch (e) {
-			console.error('Email sending failed:', e);
-
+			console.error(e);
 			return fail(500, {
 				error: "L'envoi a échoué. Réessayez plus tard.",
 				values
