@@ -1,8 +1,30 @@
 <script lang="ts">
-	import '@fontsource-variable/inter';
+	import '@fontsource-variable/source-sans-3';
 	import { enhance } from '$app/forms';
 
 	let { form } = $props();
+
+	const blank = () => ({
+		chambre: '',
+		wilaya: '',
+		session: '',
+		atelier: '',
+		nom: '',
+		age: '',
+		sexe: '',
+		telephone: '',
+		email: '',
+		commune: '',
+		profil: '',
+		domaine: '',
+		nature: '',
+		entreprise: '',
+		responsable: '',
+		fonction: ''
+	});
+
+	let f = $state(blank());
+	let sending = $state(false);
 
 	const ATELIERS = ['Tipaza', 'Boumerdès'];
 
@@ -34,355 +56,399 @@
 		'Autre'
 	];
 
-	let sending = $state(false);
-	const blank = () => ({
-		chambre: '', wilaya: '', session: '', atelier: '', nom: '', age: '', sexe: '',
-		telephone: '', email: '', commune: '', profil: '', domaine: '', nature: '',
-		entreprise: '', responsable: '', fonction: ''
-	});
-	let f = $state(blank());
+	const inputClass =
+		'mt-1.5 block w-full min-w-0 rounded-md border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 hover:border-slate-400 focus:border-slate-500 focus:ring-2 focus:ring-slate-500/15';
+
+	const labelClass = 'block text-sm font-semibold text-slate-700';
+
+	const sectionClass = 'rounded-lg border border-slate-200 bg-white p-5 sm:p-6';
+
+	const required = '<span class="text-red-600">*</span>';
 </script>
 
-<main>
-	<header>
-		<h1>Chambre algérienne de la pêche et de l’aquaculture</h1>
-		<p class="project">
-			Projet de coopération entre la Chambre algérienne de la pêche et de l’aquaculture et la FAO
-			intitulé « Autonomisation économique des femmes et des jeunes dans les chaînes de valeur de la
-			pêche en Algérie ».
-		</p>
-		<h2>Fiche de recensement des candidats aux actions de formation</h2>
-	</header>
+<svelte:head>
+	<title>Fiche de recensement | CAPA</title>
+	<meta
+		name="description"
+		content="Fiche de recensement de la Chambre algérienne de la pêche et de l’aquaculture."
+	/>
+	<meta name="color-scheme" content="light" />
+</svelte:head>
 
-	<form
-		method="POST"
-		use:enhance={() => {
-			sending = true;
-			return async ({ result, update }) => {
-				await update({ reset: result.type === 'success' });
-				sending = false;
-			};
-		}}
-	>
-		{#if form?.success}
-			<p class="notice ok" role="status">La fiche a été envoyée.</p>
-		{:else}
-			<div class="grid">
-				<div class="field">
-					<label for="chambre">Chambre</label>
-					<input id="chambre" name="chambre" bind:value={f.chambre} required />
-				</div>
+<main
+	class="min-h-screen bg-[#f7f8f6] px-4 py-8 text-slate-800 antialiased sm:py-12"
+	style="font-family: 'Source Sans 3 Variable', sans-serif; color-scheme: light;"
+>
+	<div class="mx-auto max-w-3xl">
+		<!-- Header -->
+		<header class="mb-8 text-center">
+			<div class="mx-auto mb-5 flex items-center justify-center gap-3">
+				<a
+					href="https://capaalgerie.dz"
+					target="_blank"
+					rel="noopener noreferrer"
+					aria-label="Site officiel de la CAPA"
+					class="flex h-20 w-20 items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white p-2 shadow-sm"
+				>
+					<img src="/logo.svg" alt="Logo de la CAPA" class="h-full w-full object-contain" />
+				</a>
 
-				<div class="field">
-					<label for="wilaya">Wilaya</label>
-					<input id="wilaya" name="wilaya" bind:value={f.wilaya} required />
-				</div>
-
-				<div class="field">
-					<label for="session">Session</label>
-					<input id="session" name="session" bind:value={f.session} required />
-				</div>
-
-				<div class="field">
-					<label for="atelier">Atelier qui vous intéresse</label>
-					<select id="atelier" name="atelier" bind:value={f.atelier} required>
-						<option value="">Choisir…</option>
-						{#each ATELIERS as a}<option>{a}</option>{/each}
-					</select>
-				</div>
-
-				<div class="field wide">
-					<label for="nom">Nom et prénom</label>
-					<input id="nom" name="nom" bind:value={f.nom} autocomplete="name" required />
-				</div>
-
-				<div class="field">
-					<label for="age">Âge</label>
-					<input id="age" name="age" type="number" min="1" max="99" bind:value={f.age} required />
-				</div>
-
-				<div class="field">
-					<label for="sexe">Sexe</label>
-					<select id="sexe" name="sexe" bind:value={f.sexe} required>
-						<option value="">Choisir…</option>
-						<option>Homme</option>
-						<option>Femme</option>
-					</select>
-				</div>
-
-				<div class="field">
-					<label for="telephone">Téléphone</label>
-					<input id="telephone" name="telephone" type="tel" bind:value={f.telephone} autocomplete="tel" required />
-				</div>
-
-				<div class="field">
-					<label for="email">Email</label>
-					<input id="email" name="email" type="email" bind:value={f.email} autocomplete="email" required />
-				</div>
-
-				<div class="field">
-					<label for="commune">Commune de résidence</label>
-					<input id="commune" name="commune" bind:value={f.commune} required />
-				</div>
-
-				<div class="field">
-					<label for="profil">Profil / catégorie</label>
-					<select id="profil" name="profil" bind:value={f.profil} required>
-						<option value="">Choisir…</option>
-						{#each PROFILS as p}<option>{p}</option>{/each}
-					</select>
-				</div>
-
-				<div class="field">
-					<label for="domaine">Domaine d’activité</label>
-					<select id="domaine" name="domaine" bind:value={f.domaine} required>
-						<option value="">Choisir…</option>
-						{#each DOMAINES as d}<option>{d}</option>{/each}
-					</select>
-				</div>
-
-				<div class="field">
-					<label for="nature">Nature de l’activité</label>
-					<input
-						id="nature"
-						name="nature"
-						bind:value={f.nature}
-						placeholder="Ex. : valorisation de déchets de poisson, transformation…"
-						required
+				<div
+					class="flex h-20 w-20 items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white p-2 shadow-sm"
+				>
+					<img
+						src="/flag.webp"
+						alt="Drapeau de l’Algérie"
+						class="h-full w-full rounded-lg border border-slate-400/20 object-cover"
 					/>
-				</div>
-
-				<div class="field wide">
-					<label for="entreprise">Entreprise / coopérative (dénomination)</label>
-					<input id="entreprise" name="entreprise" bind:value={f.entreprise} required />
-				</div>
-
-				<div class="field">
-					<label for="responsable">Nom et prénom du responsable</label>
-					<input id="responsable" name="responsable" bind:value={f.responsable} required />
-				</div>
-
-				<div class="field">
-					<label for="fonction">Fonction</label>
-					<select id="fonction" name="fonction" bind:value={f.fonction} required>
-						<option value="">Choisir…</option>
-						{#each FONCTIONS as fn}<option>{fn}</option>{/each}
-					</select>
 				</div>
 			</div>
 
-			<button type="submit" disabled={sending}>{sending ? 'Envoi…' : 'Envoyer'}</button>
+			<p class="mb-2 text-xs font-semibold tracking-[0.18em] text-[#173B5E] uppercase">
+				Chambre algérienne de la pêche et de l’aquaculture
+			</p>
 
+			<div class="mx-auto mb-3 h-0.5 w-10 rounded-full bg-[#173B5E]"></div>
+
+			<h1 class="text-2xl font-bold tracking-tight text-slate-700 sm:text-3xl">
+				Fiche de recensement
+			</h1>
+
+			<p class="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-600">
+				En collaboration avec la Chambre algérienne de la pêche et de l'aquaculture et le Le Centre
+				National de Recherche et de Développement de la Pêche et de l'Aquaculture.
+			</p>
+		</header>
+
+		<!-- Form -->
+		<form
+			method="POST"
+			use:enhance={() => {
+				sending = true;
+
+				return async ({ result, update }) => {
+					try {
+						await update({ reset: result.type === 'success' });
+
+						if (result.type === 'success') {
+							f = blank();
+						}
+					} finally {
+						sending = false;
+					}
+				};
+			}}
+			class="space-y-5"
+		>
+			<!-- Introduction -->
+			<div class="rounded-lg border border-slate-200 bg-white p-5 sm:p-6">
+				<p class="text-sm leading-6 text-slate-600">
+					Veuillez renseigner les informations ci-dessous afin de compléter votre fiche. Les champs
+					marqués d'un astérisque sont obligatoires.
+				</p>
+				<p class="mt-3 text-xs font-medium text-red-600">* Champs obligatoires</p>
+			</div>
+
+			<!-- Event information -->
+			<section class={sectionClass}>
+				<div class="mb-5">
+					<h2 class="text-base font-bold text-slate-900">Informations relatives à la formation</h2>
+					<p class="mt-1 text-sm text-slate-500">
+						Précisez les informations concernant votre participation.
+					</p>
+				</div>
+
+				<div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+					<div>
+						<label for="chambre" class={labelClass}>
+							Chambre <span class="text-red-600">*</span>
+						</label>
+						<input
+							id="chambre"
+							name="chambre"
+							bind:value={f.chambre}
+							required
+							class={inputClass}
+							placeholder="Votre chambre"
+						/>
+					</div>
+
+					<div>
+						<label for="wilaya" class={labelClass}>
+							Wilaya <span class="text-red-600">*</span>
+						</label>
+						<input
+							id="wilaya"
+							name="wilaya"
+							bind:value={f.wilaya}
+							required
+							class={inputClass}
+							placeholder="Votre wilaya"
+						/>
+					</div>
+
+					<div>
+						<label for="session" class={labelClass}>
+							Session <span class="text-red-600">*</span>
+						</label>
+						<input
+							id="session"
+							name="session"
+							bind:value={f.session}
+							required
+							class={inputClass}
+							placeholder="Session"
+						/>
+					</div>
+
+					<div>
+						<label for="atelier" class={labelClass}>
+							Atelier <span class="text-red-600">*</span>
+						</label>
+						<select id="atelier" name="atelier" bind:value={f.atelier} required class={inputClass}>
+							<option value="" disabled>Choisir un atelier</option>
+							{#each ATELIERS as atelier}
+								<option value={atelier}>{atelier}</option>
+							{/each}
+						</select>
+					</div>
+				</div>
+			</section>
+
+			<!-- Personal information -->
+			<section class={sectionClass}>
+				<div class="mb-5">
+					<h2 class="text-base font-bold text-slate-900">Informations personnelles</h2>
+					<p class="mt-1 text-sm text-slate-500">Vos coordonnées et informations personnelles.</p>
+				</div>
+
+				<div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+					<div class="sm:col-span-2">
+						<label for="nom" class={labelClass}>
+							Nom et prénom <span class="text-red-600">*</span>
+						</label>
+						<input
+							id="nom"
+							name="nom"
+							bind:value={f.nom}
+							required
+							class={inputClass}
+							placeholder="Votre nom complet"
+							autocomplete="name"
+						/>
+					</div>
+
+					<div>
+						<label for="age" class={labelClass}>
+							Âge <span class="text-red-600">*</span>
+						</label>
+						<input
+							id="age"
+							name="age"
+							type="number"
+							min="1"
+							bind:value={f.age}
+							required
+							class={inputClass}
+							placeholder="Votre âge"
+						/>
+					</div>
+
+					<div>
+						<label for="sexe" class={labelClass}>
+							Sexe <span class="text-red-600">*</span>
+						</label>
+						<select id="sexe" name="sexe" bind:value={f.sexe} required class={inputClass}>
+							<option value="" disabled>Sélectionner</option>
+							<option value="Homme">Homme</option>
+							<option value="Femme">Femme</option>
+						</select>
+					</div>
+
+					<div>
+						<label for="telephone" class={labelClass}>
+							Téléphone <span class="text-red-600">*</span>
+						</label>
+						<input
+							id="telephone"
+							name="telephone"
+							type="tel"
+							bind:value={f.telephone}
+							required
+							class={inputClass}
+							placeholder="Numéro de téléphone"
+							autocomplete="tel"
+						/>
+					</div>
+
+					<div>
+						<label for="email" class={labelClass}>
+							Adresse e-mail <span class="text-red-600">*</span>
+						</label>
+						<input
+							id="email"
+							name="email"
+							type="email"
+							bind:value={f.email}
+							required
+							class={inputClass}
+							placeholder="exemple@email.com"
+							autocomplete="email"
+						/>
+					</div>
+
+					<div class="sm:col-span-2">
+						<label for="commune" class={labelClass}>
+							Commune de résidence <span class="text-red-600">*</span>
+						</label>
+						<input
+							id="commune"
+							name="commune"
+							bind:value={f.commune}
+							required
+							class={inputClass}
+							placeholder="Votre commune"
+						/>
+					</div>
+				</div>
+			</section>
+
+			<!-- Professional information -->
+			<section class={sectionClass}>
+				<div class="mb-5">
+					<h2 class="text-base font-bold text-slate-900">Informations professionnelles</h2>
+					<p class="mt-1 text-sm text-slate-500">Précisez votre profil et votre activité.</p>
+				</div>
+
+				<div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+					<div>
+						<label for="profil" class={labelClass}>
+							Profil / catégorie <span class="text-red-600">*</span>
+						</label>
+						<select id="profil" name="profil" bind:value={f.profil} required class={inputClass}>
+							<option value="" disabled>Sélectionner votre profil</option>
+							{#each PROFILS as profil}
+								<option value={profil}>{profil}</option>
+							{/each}
+						</select>
+					</div>
+
+					<div>
+						<label for="domaine" class={labelClass}>
+							Domaine <span class="text-red-600">*</span>
+						</label>
+						<select id="domaine" name="domaine" bind:value={f.domaine} required class={inputClass}>
+							<option value="" disabled>Sélectionner un domaine</option>
+							{#each DOMAINES as domaine}
+								<option value={domaine}>{domaine}</option>
+							{/each}
+						</select>
+					</div>
+
+					<div class="sm:col-span-2">
+						<label for="nature" class={labelClass}>
+							Nature de l'activité / du projet
+							<span class="text-red-600">*</span>
+						</label>
+						<input
+							id="nature"
+							name="nature"
+							bind:value={f.nature}
+							required
+							class={inputClass}
+							placeholder="Précisez la nature de votre activité ou projet"
+						/>
+					</div>
+
+					<div>
+						<label for="entreprise" class={labelClass}>
+							Entreprise <span class="text-red-600">*</span>
+						</label>
+						<input
+							id="entreprise"
+							name="entreprise"
+							bind:value={f.entreprise}
+							required
+							class={inputClass}
+							placeholder="Nom de l'entreprise"
+						/>
+					</div>
+
+					<div>
+						<label for="responsable" class={labelClass}>
+							Responsable <span class="text-red-600">*</span>
+						</label>
+						<input
+							id="responsable"
+							name="responsable"
+							bind:value={f.responsable}
+							required
+							class={inputClass}
+							placeholder="Nom du responsable"
+						/>
+					</div>
+
+					<div class="sm:col-span-2">
+						<label for="fonction" class={labelClass}>
+							Fonction <span class="text-red-600">*</span>
+						</label>
+						<select
+							id="fonction"
+							name="fonction"
+							bind:value={f.fonction}
+							required
+							class={inputClass}
+						>
+							<option value="" disabled>Sélectionner votre fonction</option>
+							{#each FONCTIONS as fonction}
+								<option value={fonction}>{fonction}</option>
+							{/each}
+						</select>
+					</div>
+				</div>
+			</section>
+
+			<!-- Feedback -->
 			{#if form?.error}
-				<p class="notice err" role="alert">{form.error}</p>
+				<div
+					role="alert"
+					class="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800"
+				>
+					{form.error}
+				</div>
 			{/if}
 
-			<p class="foot">
-				Profils concernés : Jeune | Femme rurale | Porteur(se) de projet | MPME | Coopérative de
-				pêche et d’aquaculture | Autre
-			</p>
-		{/if}
-	</form>
+			{#if form?.success}
+				<div
+					role="status"
+					class="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800"
+				>
+					La fiche a été envoyée avec succès.
+				</div>
+			{/if}
+
+			<!-- Submit -->
+			<div class="pt-1">
+				<button
+					type="submit"
+					disabled={sending}
+					class="flex w-full items-center justify-center rounded-md bg-slate-800 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-700 focus:ring-2 focus:ring-slate-500 focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60"
+				>
+					{#if sending}
+						Envoi en cours...
+					{:else}
+						Envoyer la fiche
+					{/if}
+				</button>
+
+				<p class="mt-3 text-center text-xs text-slate-500">
+					Veuillez vérifier vos informations avant de soumettre le formulaire.
+				</p>
+				<p class="mt-3 text-center text-xs text-slate-500">
+					Profils concernés : Jeune | Femme rurale | Porteur(se) de projet | MPME | Coopérative de
+					pêche et d’aquaculture | Autre
+				</p>
+			</div>
+		</form>
+	</div>
 </main>
-
-<style>
-	/* Colors: soft off-white background, dark-grey (not pure black) text,
-	   and an automatic dark theme that follows the device setting. */
-	:global(:root) {
-		color-scheme: light dark;
-		--bg: #f3f5f7;
-		--card: #ffffff;
-		--ink: #1f2933;
-		--muted: #52606d;
-		--line: #c5d0d9;
-		--field: #ffffff;
-		--accent: #1f497d;
-		--accent-ink: #ffffff;
-		--ring: rgba(31, 73, 125, 0.28);
-		--ok-bg: #e6f4ea;
-		--ok-line: #2e7d32;
-		--err-bg: #fdecea;
-		--err-line: #b3261e;
-		--err-ink: #8a1c16;
-	}
-
-	@media (prefers-color-scheme: dark) {
-		:global(:root) {
-			--bg: #12181d;
-			--card: #1a2229;
-			--ink: #e6edf2;
-			--muted: #a9b8c4;
-			--line: #3a4955;
-			--field: #121a20;
-			--accent: #8fbbe8;
-			--accent-ink: #0d1a26;
-			--ring: rgba(143, 187, 232, 0.35);
-			--ok-bg: #16301c;
-			--ok-line: #4caf50;
-			--err-bg: #3a1a18;
-			--err-line: #ef6a62;
-			--err-ink: #ffb4ae;
-		}
-	}
-
-	:global(body) {
-		margin: 0;
-		background: var(--bg);
-		color: var(--ink);
-		font-family: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-		font-size: 16px;
-		line-height: 1.55;
-		-webkit-font-smoothing: antialiased;
-	}
-
-	main {
-		max-width: 48rem;
-		margin: 0 auto;
-		padding: 2rem 1rem 3.5rem;
-	}
-
-	header {
-		text-align: center;
-		margin-bottom: 1.5rem;
-	}
-	h1 {
-		color: var(--accent);
-		font-size: 1.4rem;
-		font-weight: 700;
-		line-height: 1.3;
-		letter-spacing: -0.01em;
-		margin: 0 0 0.75rem;
-	}
-	.project {
-		margin: 0;
-		color: var(--muted);
-		font-size: 0.95rem;
-	}
-	h2 {
-		font-size: 1.05rem;
-		font-weight: 600;
-		margin: 1.25rem 0 0;
-	}
-
-	form {
-		background: var(--card);
-		border: 1px solid var(--line);
-		border-radius: 12px;
-		padding: 1.5rem;
-		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.04);
-	}
-
-	.grid {
-		display: grid;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 1rem 1.1rem;
-		margin-bottom: 1.5rem;
-	}
-	.field {
-		display: flex;
-		flex-direction: column;
-		gap: 0.35rem;
-	}
-	.wide {
-		grid-column: 1 / -1;
-	}
-
-	label {
-		font-size: 0.875rem;
-		font-weight: 600;
-	}
-
-	input,
-	select {
-		font: inherit;
-		color: var(--ink);
-		background: var(--field);
-		min-width: 0;
-		min-height: 2.75rem;
-		box-sizing: border-box;
-		padding: 0.6rem 0.75rem;
-		border: 1px solid var(--line);
-		border-radius: 8px;
-		transition: border-color 0.15s, box-shadow 0.15s;
-	}
-	input::placeholder {
-		color: var(--muted);
-		opacity: 0.75;
-	}
-	input:hover,
-	select:hover {
-		border-color: var(--muted);
-	}
-	input:focus-visible,
-	select:focus-visible {
-		outline: none;
-		border-color: var(--accent);
-		box-shadow: 0 0 0 3px var(--ring);
-	}
-	input:user-invalid,
-	select:user-invalid {
-		border-color: var(--err-line);
-	}
-
-	button {
-		font: inherit;
-		font-weight: 600;
-		width: 100%;
-		min-height: 3rem;
-		cursor: pointer;
-		padding: 0.7rem 1.2rem;
-		border: 0;
-		border-radius: 8px;
-		background: var(--accent);
-		color: var(--accent-ink);
-		transition: filter 0.15s, box-shadow 0.15s;
-	}
-	button:hover:not(:disabled) {
-		filter: brightness(1.08);
-	}
-	button:focus-visible {
-		outline: none;
-		box-shadow: 0 0 0 3px var(--ring);
-	}
-	button:disabled {
-		opacity: 0.55;
-		cursor: not-allowed;
-	}
-
-	.foot {
-		font-size: 0.8rem;
-		color: var(--muted);
-		margin: 1.25rem 0 0;
-	}
-
-	.notice {
-		padding: 0.75rem 1rem;
-		border-radius: 8px;
-		margin: 1rem 0 0;
-	}
-	.ok {
-		margin: 0;
-		padding: 1.25rem 1rem;
-		text-align: center;
-		font-weight: 600;
-		background: var(--ok-bg);
-		border: 1px solid var(--ok-line);
-	}
-	.err {
-		background: var(--err-bg);
-		border: 1px solid var(--err-line);
-		color: var(--err-ink);
-	}
-
-	@media (max-width: 34rem) {
-		main {
-			padding-top: 1.25rem;
-		}
-		form {
-			padding: 1.1rem;
-		}
-		.grid {
-			grid-template-columns: 1fr;
-		}
-	}
-</style>

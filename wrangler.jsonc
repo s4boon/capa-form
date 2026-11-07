@@ -35,7 +35,7 @@
 	 */
 	"vars": {
 		"MAIL_FROM": "flawlessheron@gmail.com",
-		"MAIL_TO": "abdoumh047@gmail.com"
+		"MAIL_TO": "capa@capaalgerie.dz"
 	}
 	/**
 	 * Service Bindings (communicate between multiple Workers)
