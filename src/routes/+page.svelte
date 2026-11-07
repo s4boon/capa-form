@@ -82,7 +82,7 @@
 	<div class="mx-auto max-w-3xl">
 		<!-- Header -->
 		<header class="mb-8 text-center">
-			<div class="mx-auto mb-5 flex items-center justify-center gap-3">
+			<!-- <div class="mx-auto mb-5 flex items-center justify-center gap-3">
 				<a
 					href="https://capaalgerie.dz"
 					target="_blank"
@@ -102,7 +102,7 @@
 						class="h-full w-full rounded-lg border border-slate-400/20 object-cover"
 					/>
 				</div>
-			</div>
+			</div> -->
 
 			<p class="mb-2 text-xs font-semibold tracking-[0.18em] text-[#173B5E] uppercase">
 				Chambre algérienne de la pêche et de l’aquaculture
@@ -161,7 +161,7 @@
 				</div>
 
 				<div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
-					<div>
+					<!-- <div>
 						<label for="chambre" class={labelClass}>
 							Chambre <span class="text-red-600">*</span>
 						</label>
@@ -173,7 +173,7 @@
 							class={inputClass}
 							placeholder="Votre chambre"
 						/>
-					</div>
+					</div> -->
 
 					<div>
 						<label for="wilaya" class={labelClass}>

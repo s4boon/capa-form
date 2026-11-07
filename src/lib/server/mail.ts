@@ -3,8 +3,6 @@ import { PDFDocument, StandardFonts, rgb, type PDFFont } from 'pdf-lib';
 /** [form field name, label shown in the email] */
 
 export const FIELDS: [string, string][] = [
-	['chambre', 'Chambre'],
-
 	['wilaya', 'Wilaya'],
 
 	['session', 'Session'],
@@ -39,7 +37,7 @@ export const FIELDS: [string, string][] = [
 const LABELS: Record<string, string> = Object.fromEntries(FIELDS);
 
 const SECTIONS: { title: string; keys: string[] }[] = [
-	{ title: 'Inscription', keys: ['chambre', 'wilaya', 'session', 'atelier'] },
+	{ title: 'Inscription', keys: ['wilaya', 'session', 'atelier'] },
 
 	{
 		title: 'Candidat',
