@@ -115,8 +115,10 @@
 			</h1>
 
 			<p class="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-600">
-				En collaboration avec la Chambre algérienne de la pêche et de l'aquaculture et le Le Centre
-				National de Recherche et de Développement de la Pêche et de l'Aquaculture.
+				Projet de coopération avec la FAO intitulé: « Autonomisation économique des femmes et des
+				jeunes dans les chaînes de valeur de la pêche en Algérie »<br />En collaboration avec la
+				Chambre algérienne de la pêche et de l'aquaculture et le Le Centre National de Recherche et
+				de Développement de la Pêche et de l'Aquaculture.
 			</p>
 		</header>
 
