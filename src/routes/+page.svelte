@@ -67,10 +67,10 @@
 </script>
 
 <svelte:head>
-	<title>Fiche de recensement | CAPA</title>
+	<title>Fiche d'inscription | CAPA</title>
 	<meta
 		name="description"
-		content="Fiche de recensement de la Chambre algérienne de la pêche et de l’aquaculture."
+		content="Fiche d'inscription de la Chambre algérienne de la pêche et de l’aquaculture."
 	/>
 	<meta name="color-scheme" content="light" />
 </svelte:head>
@@ -111,7 +111,7 @@
 			<div class="mx-auto mb-3 h-0.5 w-10 rounded-full bg-[#173B5E]"></div>
 
 			<h1 class="text-2xl font-bold tracking-tight text-slate-700 sm:text-3xl">
-				Fiche de recensement
+				Fiche d'inscription
 			</h1>
 
 			<p class="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-600">
