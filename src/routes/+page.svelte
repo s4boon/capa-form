@@ -8,7 +8,6 @@
 		chambre: '',
 		wilaya: '',
 		session: '',
-		atelier: '',
 		nom: '',
 		age: '',
 		sexe: '',
@@ -16,25 +15,33 @@
 		email: '',
 		commune: '',
 		profil: '',
+		profilAutre: '',
 		domaine: '',
 		nature: '',
 		entreprise: '',
 		responsable: '',
-		fonction: ''
+		fonction: '',
+		fonctionAutre: ''
 	});
 
 	let f = $state(blank());
 	let sending = $state(false);
 
-	const ATELIERS = ['Tipaza', 'Boumerdès'];
+	// What actually gets submitted: "Autre : <précision>" when "Autre" is selected.
+	const profilValue = $derived(f.profil === 'Autre' ? `Autre : ${f.profilAutre.trim()}` : f.profil);
+	const fonctionValue = $derived(
+		f.fonction === 'Autre' ? `Autre : ${f.fonctionAutre.trim()}` : f.fonction
+	);
 
-	const DOMAINES = [
-		'Startups',
-		'Entreprise artisanale',
-		'Entreprise',
-		'Porteur de projet',
-		'Stagiaire ou étudiant'
-	];
+	const ATELIERS = ['Tipaza - 02 Décembre 2026', 'Boumerdès - 07, 08 Décembre 2026'];
+
+	// const DOMAINES = [
+	// 	'Startups',
+	// 	'Entreprise artisanale',
+	// 	'Entreprise',
+	// 	'Porteur de projet',
+	// 	'Stagiaire ou étudiant'
+	// ];
 
 	const PROFILS = [
 		'Étudiants',
@@ -104,21 +111,19 @@
 				</div>
 			</div> -->
 
-			<p class="mb-2 text-xs font-semibold tracking-[0.18em] text-[#173B5E] uppercase">
+			<!-- <p class="mb-2 text-xs font-semibold tracking-[0.18em] text-[#173B5E] uppercase">
 				Chambre algérienne de la pêche et de l’aquaculture
 			</p>
 
-			<div class="mx-auto mb-3 h-0.5 w-10 rounded-full bg-[#173B5E]"></div>
+			<div class="mx-auto mb-3 h-0.5 w-10 rounded-full bg-[#173B5E]"></div> -->
 
 			<h1 class="text-2xl font-bold tracking-tight text-slate-700 sm:text-3xl">
 				Fiche d'inscription
 			</h1>
 
 			<p class="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-600">
-				Projet de coopération avec la FAO intitulé: « Autonomisation économique des femmes et des
-				jeunes dans les chaînes de valeur de la pêche en Algérie »<br />En collaboration avec la
-				Chambre algérienne de la pêche et de l'aquaculture et le Le Centre National de Recherche et
-				de Développement de la Pêche et de l'Aquaculture.
+				Projet de coopération entre l’organisation des nations unies pour l’Alimentation et
+				l’Agriculture (FAO) et la Direction Générale de la Pêche et de l’Aquaculture (DGPA)
 			</p>
 		</header>
 
@@ -142,6 +147,10 @@
 			}}
 			class="space-y-5"
 		>
+			<!-- Submitted values for the two selects that have an "Autre" option -->
+			<input type="hidden" name="profil" value={profilValue} />
+			<input type="hidden" name="fonction" value={fonctionValue} />
+
 			<!-- Introduction -->
 			<div class="rounded-lg border border-slate-200 bg-white p-5 sm:p-6">
 				<p class="text-sm leading-6 text-slate-600">
@@ -193,22 +202,8 @@
 						<label for="session" class={labelClass}>
 							Session <span class="text-red-600">*</span>
 						</label>
-						<input
-							id="session"
-							name="session"
-							bind:value={f.session}
-							required
-							class={inputClass}
-							placeholder="Session"
-						/>
-					</div>
-
-					<div>
-						<label for="atelier" class={labelClass}>
-							Atelier <span class="text-red-600">*</span>
-						</label>
-						<select id="atelier" name="atelier" bind:value={f.atelier} required class={inputClass}>
-							<option value="" disabled>Choisir un atelier</option>
+						<select id="session" name="session" bind:value={f.session} required class={inputClass}>
+							<option value="" disabled>Choisir une session</option>
 							{#each ATELIERS as atelier}
 								<option value={atelier}>{atelier}</option>
 							{/each}
@@ -327,7 +322,8 @@
 						<label for="profil" class={labelClass}>
 							Profil / catégorie <span class="text-red-600">*</span>
 						</label>
-						<select id="profil" name="profil" bind:value={f.profil} required class={inputClass}>
+						<!-- No name: the value is submitted through the hidden "profil" input above -->
+						<select id="profil" bind:value={f.profil} required class={inputClass}>
 							<option value="" disabled>Sélectionner votre profil</option>
 							{#each PROFILS as profil}
 								<option value={profil}>{profil}</option>
@@ -339,13 +335,33 @@
 						<label for="domaine" class={labelClass}>
 							Domaine <span class="text-red-600">*</span>
 						</label>
-						<select id="domaine" name="domaine" bind:value={f.domaine} required class={inputClass}>
-							<option value="" disabled>Sélectionner un domaine</option>
-							{#each DOMAINES as domaine}
-								<option value={domaine}>{domaine}</option>
-							{/each}
-						</select>
+						<input
+							id="domaine"
+							type="text"
+							placeholder="Précisez votre domaine d'activité"
+							name="domaine"
+							bind:value={f.domaine}
+							required
+							class={inputClass}
+						/>
 					</div>
+
+					{#if f.profil === 'Autre'}
+						<div class="sm:col-span-2">
+							<label for="profilAutre" class={labelClass}>
+								Précisez votre profil <span class="text-red-600">*</span>
+							</label>
+							<input
+								id="profilAutre"
+								type="text"
+								bind:value={f.profilAutre}
+								required
+								maxlength="100"
+								class={inputClass}
+								placeholder="Votre profil / catégorie"
+							/>
+						</div>
+					{/if}
 
 					<div class="sm:col-span-2">
 						<label for="nature" class={labelClass}>
@@ -394,19 +410,31 @@
 						<label for="fonction" class={labelClass}>
 							Fonction <span class="text-red-600">*</span>
 						</label>
-						<select
-							id="fonction"
-							name="fonction"
-							bind:value={f.fonction}
-							required
-							class={inputClass}
-						>
+						<!-- No name: the value is submitted through the hidden "fonction" input above -->
+						<select id="fonction" bind:value={f.fonction} required class={inputClass}>
 							<option value="" disabled>Sélectionner votre fonction</option>
 							{#each FONCTIONS as fonction}
 								<option value={fonction}>{fonction}</option>
 							{/each}
 						</select>
 					</div>
+
+					{#if f.fonction === 'Autre'}
+						<div class="sm:col-span-2">
+							<label for="fonctionAutre" class={labelClass}>
+								Précisez votre fonction <span class="text-red-600">*</span>
+							</label>
+							<input
+								id="fonctionAutre"
+								type="text"
+								bind:value={f.fonctionAutre}
+								required
+								maxlength="100"
+								class={inputClass}
+								placeholder="Votre fonction"
+							/>
+						</div>
+					{/if}
 				</div>
 			</section>
 
@@ -443,13 +471,27 @@
 					{/if}
 				</button>
 
-				<p class="mt-3 text-center text-xs text-slate-500">
-					Veuillez vérifier vos informations avant de soumettre le formulaire.
-				</p>
-				<p class="mt-3 text-center text-xs text-slate-500">
-					Profils concernés : Jeune | Femme rurale | Porteur(se) de projet | MPME | Coopérative de
-					pêche et d’aquaculture | Autre
-				</p>
+				<!-- Both fine-print lines stay centered; the logo sits at the right edge,
+				     vertically centered across the two lines. Equal side padding on the text
+				     keeps it centered and clear of the logo. -->
+				<div class="relative mt-3">
+					<div class="space-y-3 px-16 text-center text-xs text-slate-500">
+						<p>Veuillez vérifier vos informations avant de soumettre le formulaire.</p>
+						<p>
+							Profils concernés : Jeune | Femme rurale | Porteur(se) de projet | MPME | Coopérative
+							de pêche et d’aquaculture | Autre
+						</p>
+					</div>
+					<a
+						href="https://capaalgerie.dz"
+						target="_blank"
+						rel="noopener noreferrer"
+						aria-label="Site officiel de la CAPA"
+						class="absolute top-1/2 right-0 -translate-y-1/2"
+					>
+						<img src="/logo.svg" alt="Logo de la CAPA" class="h-14 w-14 object-contain" />
+					</a>
+				</div>
 			</div>
 		</form>
 	</div>
