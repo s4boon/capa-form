@@ -33,7 +33,7 @@
 		f.fonction === 'Autre' ? `Autre : ${f.fonctionAutre.trim()}` : f.fonction
 	);
 
-	const ATELIERS = ['Tipaza - 02 Décembre 2026', 'Boumerdès - 07, 08 Décembre 2026'];
+	const ATELIERS = ['Tipaza - 02, 03 Décembre 2026', 'Boumerdès - 07, 08 Décembre 2026'];
 
 	// const DOMAINES = [
 	// 	'Startups',
