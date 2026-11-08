@@ -154,8 +154,8 @@
 			<!-- Introduction -->
 			<div class="rounded-lg border border-slate-200 bg-white p-5 sm:p-6">
 				<p class="text-sm leading-6 text-slate-600">
-					Veuillez renseigner les informations ci-dessous afin de compléter votre fiche. Les champs
-					marqués d'un astérisque sont obligatoires.
+					Veuillez renseigner les informations ci-dessous afin de compléter votre inscription. Les
+					champs marqués d'un astérisque sont obligatoires.
 				</p>
 				<p class="mt-3 text-xs font-medium text-red-600">* Champs obligatoires</p>
 			</div>
