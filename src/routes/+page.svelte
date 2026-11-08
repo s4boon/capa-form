@@ -123,7 +123,9 @@
 
 			<p class="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-600">
 				Projet de coopération entre l’organisation des nations unies pour l’Alimentation et
-				l’Agriculture (FAO) et la Direction Générale de la Pêche et de l’Aquaculture (DGPA)
+				l’Agriculture (FAO) et la Direction Générale de la Pêche et de l’Aquaculture en
+				participation de la Chambre Algérienne de la Pêche et l'Aquaculture et le Centre National de
+				Recherche et de Développement de la Pêche et de l'Aquaculture
 			</p>
 		</header>
 
@@ -151,14 +153,14 @@
 			<input type="hidden" name="profil" value={profilValue} />
 			<input type="hidden" name="fonction" value={fonctionValue} />
 
-			<!-- Introduction -->
+			<!-- Introduction
 			<div class="rounded-lg border border-slate-200 bg-white p-5 sm:p-6">
 				<p class="text-sm leading-6 text-slate-600">
 					Veuillez renseigner les informations ci-dessous afin de compléter votre inscription. Les
 					champs marqués d'un astérisque sont obligatoires.
 				</p>
 				<p class="mt-3 text-xs font-medium text-red-600">* Champs obligatoires</p>
-			</div>
+			</div> -->
 
 			<!-- Event information -->
 			<section class={sectionClass}>
